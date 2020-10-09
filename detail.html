@@ -18,23 +18,22 @@
   <!-- Navigasi -->
   <nav class="red accent-4" role="navigation">
     <div class="nav-wrapper container">
-      <a href="#" class="brand-logo" id="logo-container">Football Information</a>
+      <a href="#" class="brand-logo" id="logo-container">Detail</a>
+      <a href="#" class="sidenav-trigger" data-target="nav-mobile">☰</a>
+
+      <ul class="right hide-on-med-and-down">
+        <a href="/index.html">Home</a>
+      </ul>
     </div>
   </nav>
   <!-- Akhir Navigasi -->
-  <div class="container">
-    <h3 class="center-align">Kontestan Premier League</h3>
-    <div class="row" id="footbal">
-
-    </div>
-  </div>
-
+  <div class="container" id="body-content"></div>
   <script src="js/materialize.min.js"></script>
-  <script src="js/app.js"></script>
   <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      getFootballs();
+      getFootbalDetails();
     });
   </script>
 </body>
