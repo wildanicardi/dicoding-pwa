@@ -21,6 +21,7 @@ const headerApi = {
   }
 }
 const getFootballs = () => {
+
   if ('caches' in window) {
     caches.match(BASE_URL + "v2/competitions/2021/teams").then((response) => {
       if (response) {
@@ -35,7 +36,6 @@ const getFootballs = () => {
               <div class="card blue-grey col m8 s12">
                 <div class="card-content white-text">
                   <span class="card-title">${data.name}</span>
-                  <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
                   <span>Venue: ${data.venue},</span>
                   <span>Website: ${data.website},</span>
                   <span>Address: ${data.address}</span>
@@ -66,7 +66,6 @@ const getFootballs = () => {
           <div class="card blue-grey col m8 s12">
             <div class="card-content white-text">
               <span class="card-title">${data.name}</span>
-              <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
               <span>Venue: ${data.venue},</span>
               <span>Website: ${data.website},</span>
               <span>Address: ${data.address}</span>
@@ -83,13 +82,14 @@ const getFootballs = () => {
     .catch(error);
 }
 const getFootbalDetails = () => {
-  let urlParams = new URLSearchParams(window.location.search);
-  let idParam = urlParams.get("id");
-  if ('caches' in window) {
-    caches.match(BASE_URL + "v2/teams/" + idParam).then((response) => {
-      if (response) {
-        response.json().then(data => {
-          let footbalDetail = `
+  return new Promise(function (resolve, reject) {
+    let urlParams = new URLSearchParams(window.location.search);
+    let idParam = urlParams.get("id");
+    if ('caches' in window) {
+      caches.match(BASE_URL + "v2/teams/" + idParam).then((response) => {
+        if (response) {
+          response.json().then(data => {
+            let footbalDetail = `
           <div class="row" style="margin-top: 10px;">
           <div class="grid-example col m4 s4 offset-s4">
             <img class="responsive-img" src="${data.crestUrl}" alt="photo">
@@ -106,16 +106,17 @@ const getFootbalDetails = () => {
           </div>
         </div>
           `;
-          document.getElementById("body-content").innerHTML = footbalDetail;
-        });
-      }
-    });
-  }
-  fetch(BASE_URL + "v2/teams/" + idParam, headerApi)
-    .then(statusResponse)
-    .then(jsonResponse)
-    .then(data => {
-      let footbalDetail = `
+            document.getElementById("body-content").innerHTML = footbalDetail;
+            resolve(data)
+          });
+        }
+      });
+    }
+    fetch(BASE_URL + "v2/teams/" + idParam, headerApi)
+      .then(statusResponse)
+      .then(jsonResponse)
+      .then(data => {
+        let footbalDetail = `
       <div class="row" style="margin-top: 10px;">
       <div class="grid-example col m4 s4 offset-s4">
         <img class="responsive-img" src="${data.crestUrl}" alt="photo">
@@ -132,7 +133,59 @@ const getFootbalDetails = () => {
       </div>
     </div>
       `;
-      document.getElementById("body-content").innerHTML = footbalDetail;
-    }).catch(error);
+        document.getElementById("body-content").innerHTML = footbalDetail;
+        resolve(data);
+      }).catch(error);
+  })
+}
 
+const getSavedFootbals = () => {
+  getAll().then(footbals => {
+    var footbalsHTML = "";
+    footbals.forEach(function (data) {
+      footbalsHTML += `
+                  <div class="card col m8 s12" style="margin-top: 10px;">
+                    <a href="./detail.html?id=${data.id}&saved=true">
+                      <div class="card-image waves-effect waves-block waves-light">
+                        <img src="${data.crestUrl}" />
+                      </div>
+                    </a>
+                    <div class="card-content">
+                      <span class="card-title truncate">${data.name}</span>
+                      <span>Venue: ${data.venue},</span>
+                      <span>Website: ${data.website},</span>
+                      <span>Address: ${data.address}</span>
+                    </div>
+                  </div>
+                `;
+    });
+    // Sisipkan komponen card ke dalam elemen dengan id #body-content
+    document.getElementById("footbales-saved").innerHTML = footbalsHTML;
+  })
+}
+
+const getSavedFootbalById = () => {
+  let urlParams = new URLSearchParams(window.location.search);
+  let idParam = urlParams.get("id");
+  getById(idParam).then(data => {
+    console.log("detail saved", data);
+    let footbalDetail = `
+    <div class="row" style="margin-top: 10px;">
+    <div class="grid-example col m4 s4 offset-s4">
+      <img class="responsive-img" src="${data.crestUrl}" alt="photo">
+    </div>
+    <div class="grid-example col m8 s12">
+      <p>
+        ${data.name} adalah sebuah klub sepak bola profesional Inggris yang bermarkas di ${data.venue},
+        dan bermain di kasta tertinggi Liga Inggris. Didirikan pada tahun ${data.founded}.    
+        diantara nama-nama pemainya adalah : 
+      </p>
+      <br>
+      <h6>${data.squad[0].name}</h6> Dan
+      <h6>${data.squad[1].name}</h6>
+    </div>
+  </div>
+    `;
+    document.getElementById("body-content").innerHTML = footbalDetail;
+  });
 }

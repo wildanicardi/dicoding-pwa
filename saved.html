@@ -20,8 +20,7 @@
   <!-- Navigasi -->
   <nav class="red accent-4" role="navigation">
     <div class="nav-wrapper container">
-      <a href="#" class="brand-logo" id="logo-container">Detail</a>
-      <a href="#" class="sidenav-trigger" data-target="nav-mobile">☰</a>
+      <a href="#" class="brand-logo" id="logo-container">Football Information</a>
 
       <ul class="right hide-on-med-and-down">
         <a href="/index.html">Home</a>
@@ -29,38 +28,21 @@
     </div>
   </nav>
   <!-- Akhir Navigasi -->
-  <div class="container" id="body-content"></div>
-  <div class="fixed-action-btn">
-    <a class="btn-floating btn-large red" id="save">
-      <i class="large material-icons">save</i>
-    </a>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m7" id="footbales-saved">
+      </div>
+    </div>
   </div>
+
   <script src="js/materialize.min.js"></script>
-  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
   <script src="js/idb.js"></script>
   <script src="js/db.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/api.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-
-      let urlParams = new URLSearchParams(window.location.search);
-      var isFromSaved = urlParams.get("saved");
-      var save = document.getElementById('save');
-      if (isFromSaved) {
-        // Hide fab jika dimuat dari indexed db
-        save.style.display = 'none';
-
-        // ambil artikel lalu tampilkan
-        getSavedFootbalById();
-      } else {
-        var footbal = getFootbalDetails();
-      }
-      save.onclick = () => {
-        console.log("Tombol save D klick");
-        footbal.then((data) => {
-          storeData(data);
-        })
-      }
+      getSavedFootbals();
     });
   </script>
 </body>

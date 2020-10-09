@@ -13,6 +13,7 @@ var urlsToCache = [
   "/js/app.js",
   "/images/mu.jpg",
   "/mu192x192.png",
+  "/mu512x512.png",
 ];
 
 self.addEventListener("install", function (event) {
