@@ -32,13 +32,13 @@ function getAll() {
 }
 
 function getById(id) {
-  console.log("id", id);
+  let dataId = parseInt(id);
   return new Promise(function (resolve, reject) {
     dbPromised
       .then(function (db) {
         var tx = db.transaction("footbals", "readonly");
         var store = tx.objectStore("footbals");
-        return store.get(id);
+        return store.get(dataId);
       })
       .then(function (data) {
         console.log("resolve", data)
