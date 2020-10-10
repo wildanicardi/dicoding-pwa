@@ -32,7 +32,7 @@
   <div class="container" id="body-content"></div>
   <div class="fixed-action-btn">
     <a class="btn-floating btn-large red" id="save">
-      <i class="large material-icons">save</i>
+      <i class="large material-icons" id="icon-save">save</i>
     </a>
   </div>
   <script src="js/materialize.min.js"></script>
@@ -46,21 +46,35 @@
       let urlParams = new URLSearchParams(window.location.search);
       var isFromSaved = urlParams.get("saved");
       var save = document.getElementById('save');
+
+      var iconSave = document.getElementById('icon-save');
       if (isFromSaved) {
         // Hide fab jika dimuat dari indexed db
-        save.style.display = 'none';
-
+        iconSave.innerHTML = 'delete';
+        var detail = document.getElementById("logo-container");
+        detail.innerHTML = "Detail Football Dari IndexedDb";
         // ambil artikel lalu tampilkan
-        getSavedFootbalById();
+        var savedData = getSavedFootbalById();
+        save.onclick = () => {
+          console.log("Tombol hapus D klick");
+          alert("Berhasil Dihapus");
+          savedData.then(data => {
+            console.log(data);
+            deleteData(data.id);
+          });
+          location.replace("/index.html");
+        }
       } else {
         var footbal = getFootbalDetails();
+        save.onclick = () => {
+          console.log("Tombol save D klick");
+          alert("Berhasil disimpan");
+          footbal.then((data) => {
+            storeData(data);
+          })
+        }
       }
-      save.onclick = () => {
-        console.log("Tombol save D klick");
-        footbal.then((data) => {
-          storeData(data);
-        })
-      }
+
     });
   </script>
 </body>

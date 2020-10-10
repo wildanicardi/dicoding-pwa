@@ -45,3 +45,17 @@ function getById(id) {
       });
   });
 }
+
+function deleteData(id) {
+  let dataId = parseInt(id);
+  dbPromised
+    .then(function (db) {
+      var tx = db.transaction("footbals", "readwrite");
+      var store = tx.objectStore("footbals");
+      store.delete(dataId);
+      return tx.complete;
+    })
+    .then(function (data) {
+      console.log("Data berhasil terhapus");;
+    });
+}

@@ -144,17 +144,18 @@ const getSavedFootbals = () => {
     var footbalsHTML = "";
     footbals.forEach(function (data) {
       footbalsHTML += `
-                  <div class="card col m8 s12" style="margin-top: 10px;">
-                    <a href="./detail.html?id=${data.id}&saved=true">
+                  <div class="card col m4" style="margin-top: 10px;margin-left:15px;">
                       <div class="card-image waves-effect waves-block waves-light">
                         <img src="${data.crestUrl}" />
                       </div>
-                    </a>
                     <div class="card-content">
                       <span class="card-title truncate">${data.name}</span>
                       <span>Venue: ${data.venue},</span>
                       <span>Website: ${data.website},</span>
                       <span>Address: ${data.address}</span>
+                    </div>
+                    <div class="card-action">
+                      <a href="./detail.html?id=${data.id}&saved=true">Detail</a>
                     </div>
                   </div>
                 `;
@@ -165,10 +166,11 @@ const getSavedFootbals = () => {
 }
 
 const getSavedFootbalById = () => {
-  let urlParams = new URLSearchParams(window.location.search);
-  let idParam = urlParams.get("id");
-  getById(idParam).then(data => {
-    let footbalDetail = `
+  return new Promise(function (resolve, reject) {
+    let urlParams = new URLSearchParams(window.location.search);
+    let idParam = urlParams.get("id");
+    getById(idParam).then(data => {
+      let footbalDetail = `
     <div class="row" style="margin-top: 10px;">
     <div class="grid-example col m4 s4 offset-s4">
       <img class="responsive-img" src="${data.crestUrl}" alt="photo">
@@ -185,6 +187,8 @@ const getSavedFootbalById = () => {
     </div>
   </div>
     `;
-    document.getElementById("body-content").innerHTML = footbalDetail;
+      document.getElementById("body-content").innerHTML = footbalDetail;
+      resolve(data);
+    });
   });
 }
