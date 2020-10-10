@@ -168,7 +168,6 @@ const getSavedFootbalById = () => {
   let urlParams = new URLSearchParams(window.location.search);
   let idParam = urlParams.get("id");
   getById(idParam).then(data => {
-    console.log("detail saved", data);
     let footbalDetail = `
     <div class="row" style="margin-top: 10px;">
     <div class="grid-example col m4 s4 offset-s4">

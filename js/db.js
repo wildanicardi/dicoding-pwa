@@ -41,7 +41,6 @@ function getById(id) {
         return store.get(dataId);
       })
       .then(function (data) {
-        console.log("resolve", data)
         resolve(data);
       });
   });
