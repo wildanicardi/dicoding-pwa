@@ -43,12 +43,10 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       let urlParams = new URLSearchParams(window.location.search);
-      var isFromSaved = urlParams.get("saved");
       var idSave = urlParams.get("id");
       var save = document.getElementById("save");
 
       var iconSave = document.getElementById("icon-save");
-      var isFavorite = false;
       var footbal = getFootbalDetails();
       getById(idSave).then((data) => {
         if (data) {
