@@ -1,5 +1,5 @@
 //menyimpan asset ke cache
-const CACHE_NAME = "firstpwa-v6";
+const CACHE_NAME = "firstpwa-v7";
 var urlsToCache = [
   "/",
   "/manifest.json",
@@ -7,7 +7,7 @@ var urlsToCache = [
   "https://fonts.gstatic.com/s/materialicons/v55/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2",
   "/index.html",
   "/detail.html",
-  "/pages/contact.html",
+  "/pages/klasemen.html",
   "/pages/home.html",
   "/pages/saved.html",
   "/pages/info.html",
