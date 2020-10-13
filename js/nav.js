@@ -46,6 +46,8 @@ document.addEventListener("DOMContentLoaded", function () {
           getFootballs();
         } else if (page === "saved") {
           getSavedFootbals();
+        } else if (page === "klasemen") {
+          getStandings();
         }
         if (this.status == 200) {
           content.innerHTML = xhttp.responseText;

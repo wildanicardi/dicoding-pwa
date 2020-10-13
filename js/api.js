@@ -192,3 +192,64 @@ const getSavedFootbalById = () => {
     });
   });
 }
+const getStandings = () => {
+
+  if ('caches' in window) {
+    caches.match(BASE_URL + "v2/competitions/2021/teams").then((response) => {
+      if (response) {
+        response.json().then((data) => {
+          let standingHtml = "";
+          data.standings.forEach((data) => {
+            if (data.type === "TOTAL") {
+              data.table.forEach(standing => {
+                standingHtml += `
+                <tr>
+                  <td>${standing.position}</td>
+                  <td>${standing.team.name}</td>
+                  <td>${standing.playedGames}</td>
+                  <td>${standing.won}</td>
+                  <td>${standing.draw}</td>
+                  <td>${standing.lost}</td>
+                  <td>${standing.points}</td>
+                  <td>${standing.goalDifference}</td>
+                </tr>
+                `
+              })
+            }
+
+          });
+          document.getElementById("klasemen").innerHTML = standingHtml;
+        })
+      }
+    })
+  }
+  fetch(BASE_URL + "v2/competitions/2021/standings", headerApi)
+    .then(statusResponse)
+    .then(jsonResponse)
+    .then(data => {
+      let standingHtml = "";
+      data.standings.forEach((data) => {
+        if (data.type === "TOTAL") {
+          data.table.forEach(standing => {
+            standingHtml += `
+            <tr>
+              <td>${standing.position}</td>
+              <td>${standing.team.name}</td>
+              <td>${standing.playedGames}</td>
+              <td>${standing.won}</td>
+              <td>${standing.draw}</td>
+              <td>${standing.lost}</td>
+              <td>${standing.points}</td>
+              <td>${standing.goalDifference}</td>
+            </tr>
+            `
+          })
+        }
+
+      });
+      document.getElementById("klasemen").innerHTML = standingHtml;
+      document.getElementById("table-liga").innerHTML = `Tabel Klasemen ${data.competition.name}`;
+
+    })
+    .catch(error);
+}

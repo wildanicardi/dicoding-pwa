@@ -42,39 +42,32 @@
   <script src="js/app.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-
       let urlParams = new URLSearchParams(window.location.search);
       var isFromSaved = urlParams.get("saved");
-      var save = document.getElementById('save');
+      var idSave = urlParams.get("id");
+      var save = document.getElementById("save");
 
-      var iconSave = document.getElementById('icon-save');
-      if (isFromSaved) {
-        // Hide fab jika dimuat dari indexed db
-        iconSave.innerHTML = 'delete';
-        var detail = document.getElementById("logo-container");
-        detail.innerHTML = "Detail Football Dari IndexedDb";
-        // ambil artikel lalu tampilkan
-        var savedData = getSavedFootbalById();
-        save.onclick = () => {
-          console.log("Tombol hapus D klick");
-          alert("Berhasil Dihapus");
-          savedData.then(data => {
-            console.log(data);
-            deleteData(data.id);
-          });
-          location.replace("/index.html");
+      var iconSave = document.getElementById("icon-save");
+      var isFavorite = false;
+      var footbal = getFootbalDetails();
+      getById(idSave).then((data) => {
+        if (data) {
+          iconSave.innerHTML = "delete";
+          save.onclick = () => {
+            alert("Berhasil dihapus");
+            deleteData(idSave);
+            iconSave.innerHTML = "save";
+          };
+        } else {
+          save.onclick = () => {
+            footbal.then((data) => {
+              alert("Berhasil disimpan");
+              storeData(data);
+              iconSave.innerHTML = "delete";
+            });
+          };
         }
-      } else {
-        var footbal = getFootbalDetails();
-        save.onclick = () => {
-          console.log("Tombol save D klick");
-          alert("Berhasil disimpan");
-          footbal.then((data) => {
-            storeData(data);
-          })
-        }
-      }
-
+      });
     });
   </script>
 </body>
