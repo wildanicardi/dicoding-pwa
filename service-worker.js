@@ -7,6 +7,7 @@ var urlsToCache = [
   "https://fonts.gstatic.com/s/materialicons/v55/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2",
   "/index.html",
   "/detail.html",
+  "/nav.html",
   "/pages/klasemen.html",
   "/pages/home.html",
   "/pages/saved.html",
@@ -35,9 +36,7 @@ self.addEventListener("fetch", function (event) {
   let BASE_URL = "https://api.football-data.org/";
   if (event.request.url.indexOf(BASE_URL) > -1) {
     event.respondWith(
-      caches
-      .open(CACHE_NAME)
-      .then(function (cache) {
+      caches.open(CACHE_NAME).then(function (cache) {
         return fetch(event.request).then(function (response) {
           cache.put(event.request.url, response.clone());
           return response;
@@ -46,14 +45,15 @@ self.addEventListener("fetch", function (event) {
     );
   } else {
     event.respondWith(
-      caches.match(event.request, {
-        ignoreSearch: true
-      }).then(function (response) {
-        return response || fetch(event.request);
-      })
-    )
+      caches
+        .match(event.request, {
+          ignoreSearch: true,
+        })
+        .then(function (response) {
+          return response || fetch(event.request);
+        })
+    );
   }
-
 });
 
 //penghapusan cache
@@ -71,21 +71,20 @@ self.addEventListener("activate", function (event) {
   );
 });
 
-self.addEventListener('push', function (event) {
+self.addEventListener("push", function (event) {
   var body;
   if (event.data) {
     body = event.data.text();
   } else {
-    body = 'Push message no payload';
+    body = "Push message no payload";
   }
   var options = {
-    'body': "Ini adalah Notifikasi",
-    'requireInteraction': true,
-    'icon': '/images/mu.jpg',
-    'badge': '/images/mu.jpg',
-
+    body: "Ini adalah Notifikasi",
+    requireInteraction: true,
+    icon: "/images/mu.jpg",
+    badge: "/images/mu.jpg",
   };
   event.waitUntil(
-    self.registration.showNotification('Push Notification', options)
+    self.registration.showNotification("Push Notification", options)
   );
 });
