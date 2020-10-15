@@ -195,7 +195,7 @@ const getSavedFootbalById = () => {
 const getStandings = () => {
 
   if ('caches' in window) {
-    caches.match(BASE_URL + "v2/competitions/2021/teams").then((response) => {
+    caches.match(BASE_URL + "v2/competitions/2021/standings").then((response) => {
       if (response) {
         response.json().then((data) => {
           let standingHtml = "";
