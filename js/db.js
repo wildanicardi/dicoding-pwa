@@ -1,5 +1,5 @@
-var dbPromised = idb.open("footbal-saved", 3, function (upgradeDb) {
-  var footbalObjectStore = upgradeDb.createObjectStore("footbals", {
+let dbPromised = idb.open("footbal-saved", 3, function (upgradeDb) {
+  let footbalObjectStore = upgradeDb.createObjectStore("footbals", {
     keyPath: "id"
   })
 })

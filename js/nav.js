@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (this.status != 200) return;
 
         // Muat daftar tautan menu
-        document.querySelectorAll(".topnav, .sidenav").forEach(function (elm) {
+        document.querySelectorAll(".topnav, .sidenav").forEach((elm) => {
           elm.innerHTML = xhttp.responseText;
         });
 
