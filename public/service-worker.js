@@ -56,6 +56,11 @@ workbox.routing.registerRoute(
     cacheName: 'google-fonts-stylesheets',
   })
 );
+workbox.routing.registerRoute("https://api.football-data.org/",
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'api-football',
+  })
+);
 workbox.routing.registerRoute(
   new RegExp('/pages/'),
     workbox.strategies.staleWhileRevalidate({
