@@ -42,9 +42,6 @@ function requestPermission() {
         return;
       }
 
-      navigator.serviceWorker.getRegistration().then(function (reg) {
-        reg.showNotification('Notifikasi Telah diijinkan!');
-      });
     });
   }
 }

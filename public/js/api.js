@@ -248,8 +248,6 @@ const getStandings = () => {
 
       });
       document.getElementById("klasemen").innerHTML = standingHtml;
-      document.getElementById("table-liga").innerHTML = `Tabel Klasemen ${data.competition.name}`;
-
     })
     .catch(error);
 }
