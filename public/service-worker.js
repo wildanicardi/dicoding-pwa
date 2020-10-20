@@ -22,7 +22,9 @@ workbox.precaching.precacheAndRoute([
   { url: '/js/idb.js', revision: '2' },
   { url: '/js/nav.js', revision: '2' },
   { url: '/js/idb.js', revision: '2' },
-]);
+],{
+  ignoreUrlParametersMatching: [/.*/]
+});
 workbox.routing.registerRoute(
   /\.(?:png|gif|jpg|jpeg|svg)$/,
   workbox.strategies.cacheFirst({
